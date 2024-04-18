@@ -113,7 +113,7 @@ func main() {
 
 	dialog.ShowForm("Enter your password...", "Enter", "Cancel", items, func(_ bool) {
 
-		cmd := exec.Command("sh", "-c", fmt.Sprintf("echo '%s' | sudo -S", string(user_password.Value)))
+		cmd := exec.Command("sh", "-c", fmt.Sprintf("echo '%s' | sudo -S ls", user_password.Value))
 
 		_, err := cmd.Output()
 		if err != nil {
@@ -175,13 +175,14 @@ Icon=%s`, fullFilePath, userInputAppName, fullIconPath)
 
 			parts := strings.Fields(cmdStr)
 
-			exec.Command(parts[0], parts[1:]...)
+			cmd := exec.Command(parts[0], parts[1:]...)
 			// fmt.Printf("com: %s", cmd)
-			// _, err := cmd.CombinedOutput()
 
+			cmd.CombinedOutput()
+			// _, err := cmd.CombinedOutput()
 			// dialog.ShowError(err, window)
 
-			isSpecifiedAppLabel.SetText("*App has been suckcessfully added")
+			isSpecifiedAppLabel.SetText("*App has been successfully added")
 
 			// window.Close()
 
