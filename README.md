@@ -1,8 +1,7 @@
 # App Installer
 
 ## Description
-
-/home/leo/Pictures/Screenshots/Screenshot from 2024-04-18 19-05-01.png
+![Screenshot from 2024-04-18 19-05-01](https://github.com/aamorous/app_installer/assets/137004870/63ab31db-20ee-48f6-8d4e-50c023622a72)
 
 Simple GUI tool for adding executable files to your app overview.
 
