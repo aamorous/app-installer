@@ -8,8 +8,6 @@ import (
 	"os/user"
 	"path/filepath"
 
-	// "strings"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
@@ -83,7 +81,6 @@ func main() {
 
 			fmt.Println("File path: ", fullFilePath)
 
-			// Update the label text to show the full file path
 			descriptionLabelFile.SetText("Chosen app: " + fileName)
 
 		}, window)
@@ -106,7 +103,6 @@ func main() {
 
 			fmt.Println("Icon path: ", fullFilePath)
 
-			// Update the label text to show the full file path
 			descriptionLabelIcon.SetText("Chosen icon: " + fileIconName)
 		}, window)
 	})
@@ -163,23 +159,6 @@ Icon=%s`, fullFilePath, userInputAppName, fullIconPath)
 		dialog.ShowForm("Enter your password...", "Enter", "Cancel", items, func(_ bool) {
 
 			commandToExecute := fmt.Sprintf("sudo mv %s /usr/share/applications/ && sudo chmod +x /usr/share/applications/%s.desktop", filePath, fileName)
-
-			// commands := strings.Split(commandToExecute, "&&")
-
-			// for _, cmdStr := range commands {
-
-			// 	cmdStr = strings.TrimSpace(cmdStr)
-
-			// 	parts = strings.Fields(cmdStr)
-
-			// 	cmd := exec.Command(parts[0], parts[1:]...)
-			// 	fmt.Printf("com: %s", cmd)
-
-			// 	// cmd.CombinedOutput()
-			// 	_, err := cmd.CombinedOutput()
-			// 	dialog.ShowError(err, window)
-
-			// }
 
 			cmd := exec.Command("sh", "-c", fmt.Sprintf("echo '%s' | sudo -S %s ", user_password.Value, commandToExecute))
 
