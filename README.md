@@ -5,7 +5,7 @@
 
 Simple GUI tool for adding executable apps to your app overview. It configures .desktop entry config  
 
-### Prerequisites
+### It uses
 
 - Fyne v2.0
 - Go 1.22
