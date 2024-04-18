@@ -41,6 +41,8 @@ func main() {
 	var fullFilePath string
 	var fileName string
 	var userInputAppName string
+	var fullIconPath string
+	var fileIconName string
 
 	entry := widget.NewEntry()
 	entry.SetPlaceHolder("Add name to your app *(Ignore for setting existing name)")
@@ -81,9 +83,6 @@ func main() {
 	})
 
 	descriptionLabelIcon := widget.NewLabel("Choose icon: *(Ignore unless you want fully transparent one) ")
-
-	var fullIconPath string
-	var fileIconName string
 
 	openIconButton := widget.NewButton("Choose icon", func() {
 		dialog.ShowFileOpen(func(r fyne.URIReadCloser, err error) {
