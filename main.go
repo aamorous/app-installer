@@ -52,6 +52,8 @@ func main() {
 		userInputAppName = entry.Text
 		if !(len(fileName) < 1) {
 			isSpecifiedAppLabel.SetText("*Saved")
+		} else {
+			isSpecifiedAppLabel.SetText("*Nothing to save")
 		}
 	}
 
@@ -111,7 +113,7 @@ func main() {
 
 	dialog.ShowForm("Enter your password...", "Enter", "Cancel", items, func(_ bool) {
 
-		cmd := exec.Command("sh", "-c", fmt.Sprintf("echo '%s' | sudo -S ls", user_password.Value))
+		cmd := exec.Command("sh", "-c", fmt.Sprintf("echo '%s' | sudo -S", string(user_password.Value)))
 
 		_, err := cmd.Output()
 		if err != nil {
@@ -173,13 +175,17 @@ Icon=%s`, fullFilePath, userInputAppName, fullIconPath)
 
 			parts := strings.Fields(cmdStr)
 
-			cmd := exec.Command(parts[0], parts[1:]...)
-			fmt.Printf("com: %s", cmd)
-			_, err := cmd.CombinedOutput()
+			exec.Command(parts[0], parts[1:]...)
+			// fmt.Printf("com: %s", cmd)
+			// _, err := cmd.CombinedOutput()
 
-			dialog.ShowError(err, window)
+			// dialog.ShowError(err, window)
 
-			return
+			isSpecifiedAppLabel.SetText("*App has been suckcessfully added")
+
+			// window.Close()
+
+			// return
 		}
 
 	})
@@ -192,9 +198,6 @@ Icon=%s`, fullFilePath, userInputAppName, fullIconPath)
 			openIconButton,
 			entry,
 			captureButton,
-			container.NewBorder(layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer()),
-			container.NewBorder(layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer()),
-			container.NewBorder(layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer(), layout.NewSpacer()),
 			isSpecifiedAppLabel,
 			container.NewBorder(layout.NewSpacer(), createDotConfigButton, layout.NewSpacer(), layout.NewSpacer()),
 		),
