@@ -7,7 +7,8 @@ import (
 	"os/exec"
 	"os/user"
 	"path/filepath"
-	"strings"
+
+	// "strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -43,6 +44,12 @@ func main() {
 	var userInputAppName string
 	var fullIconPath string
 	var fileIconName string
+
+	var username string
+	var dirPath string
+	var fileBaseName string
+	var filePath string
+	// var parts []string
 
 	entry := widget.NewEntry()
 	entry.SetPlaceHolder("Add name to your app *(Ignore for setting existing name)")
@@ -110,17 +117,6 @@ func main() {
 		widget.NewFormItem("Password", user_password),
 	}
 
-	dialog.ShowForm("Enter your password...", "Enter", "Cancel", items, func(_ bool) {
-
-		cmd := exec.Command("sh", "-c", fmt.Sprintf("echo '%s' | sudo -S ls", user_password.Value))
-
-		_, err := cmd.Output()
-		if err != nil {
-			// fmt.Println("Failed to run command with password:", err)
-			return
-		}
-	}, window)
-
 	createDotConfigButton := widget.NewButton("Create app", func() {
 		if len(fullFilePath) < 1 {
 			isSpecifiedAppLabel.SetText("*You didn't specify the path")
@@ -143,13 +139,13 @@ Icon=%s`, fullFilePath, userInputAppName, fullIconPath)
 		if err != nil {
 			log.Fatalf(err.Error())
 		}
-		username := currentUser.Username
+		username = currentUser.Username
 
-		dirPath := fmt.Sprintf("/home/%s/Documents", username)
+		dirPath = fmt.Sprintf("/home/%s/Documents", username)
 
-		fileBaseName := fmt.Sprintf("%s.desktop", fileName)
+		fileBaseName = fmt.Sprintf("%s.desktop", fileName)
 
-		filePath := dirPath + "/" + fileBaseName
+		filePath = dirPath + "/" + fileBaseName
 
 		file, err := os.Create(filePath)
 		if err != nil {
@@ -164,25 +160,39 @@ Icon=%s`, fullFilePath, userInputAppName, fullIconPath)
 			return
 		}
 
-		commandToExecute := fmt.Sprintf("sudo mv %s /usr/share/applications/ && sudo chmod +x /usr/share/applications/%s.desktop", filePath, fileName)
+		dialog.ShowForm("Enter your password...", "Enter", "Cancel", items, func(_ bool) {
 
-		commands := strings.Split(commandToExecute, "&&")
+			commandToExecute := fmt.Sprintf("sudo mv %s /usr/share/applications/ && sudo chmod +x /usr/share/applications/%s.desktop", filePath, fileName)
 
-		for _, cmdStr := range commands {
+			// commands := strings.Split(commandToExecute, "&&")
 
-			cmdStr = strings.TrimSpace(cmdStr)
+			// for _, cmdStr := range commands {
 
-			parts := strings.Fields(cmdStr)
+			// 	cmdStr = strings.TrimSpace(cmdStr)
 
-			cmd := exec.Command(parts[0], parts[1:]...)
-			// fmt.Printf("com: %s", cmd)
+			// 	parts = strings.Fields(cmdStr)
 
-			cmd.CombinedOutput()
-			// _, err := cmd.CombinedOutput()
-			// dialog.ShowError(err, window)
+			// 	cmd := exec.Command(parts[0], parts[1:]...)
+			// 	fmt.Printf("com: %s", cmd)
 
+			// 	// cmd.CombinedOutput()
+			// 	_, err := cmd.CombinedOutput()
+			// 	dialog.ShowError(err, window)
+
+			// }
+
+			cmd := exec.Command("sh", "-c", fmt.Sprintf("echo '%s' | sudo -S %s ", user_password.Value, commandToExecute))
+
+			output, err := cmd.Output()
 			isSpecifiedAppLabel.SetText("*App has been successfully added")
-		}
+
+			dialog.ShowInformation("info", string(output), window)
+			if err != nil {
+
+				return
+			}
+		}, window)
+
 	})
 
 	window.SetContent(
