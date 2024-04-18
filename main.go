@@ -47,7 +47,6 @@ func main() {
 	var dirPath string
 	var fileBaseName string
 	var filePath string
-	// var parts []string
 
 	entry := widget.NewEntry()
 	entry.SetPlaceHolder("Add name to your app *(Ignore for setting existing name)")

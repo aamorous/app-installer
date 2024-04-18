@@ -12,5 +12,7 @@ Simple GUI tool for adding executable apps to your app overview. It uses .deskto
 
 ### Installing
 
-Download executable - https://github.com/aamorous/app_installer/releases/download/v0.0.1/appinstaller
+Download executable - https://github.com/aamorous/app_installer/releases/download/v0.0.1/appinstaller*
 
+*1. If you can't run downloaded file, right click on file -> Properties -> check allow executing file as program.
+*2. When adding executable inside that tool make sure your chosen app path won't change. 
