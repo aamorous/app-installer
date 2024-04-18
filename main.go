@@ -183,12 +183,7 @@ Icon=%s`, fullFilePath, userInputAppName, fullIconPath)
 			// dialog.ShowError(err, window)
 
 			isSpecifiedAppLabel.SetText("*App has been successfully added")
-
-			// window.Close()
-
-			// return
 		}
-
 	})
 
 	window.SetContent(
